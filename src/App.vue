@@ -6,20 +6,20 @@
       <Category
         v-for="(category, index) in categories"
         :key="index"
-        @setActiveItem="setActiveItem"
         :category="category"
       />
     </div>
     <div class="rightSide basePadding">
-      <Details :item="activeItem" />
+      <Details :item="getActiveItem" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, computed } from '@vue/reactivity';
+import { ref, computed } from 'vue';
 import './assets/base.scss';
 import axios from 'axios';
+import useActiveItem from './composables/useActiveItem';
 import Category from './components/Category.vue';
 import Details from './components/Details.vue';
 export default {
@@ -28,6 +28,7 @@ export default {
 
   setup() {
     const items = ref([]);
+    const { getActiveItemId, getActiveItem } = useActiveItem(items);
     const starters = computed(() =>
       [...items.value].filter((item) => item.rarity === 'początkowy')
     );
@@ -39,11 +40,13 @@ export default {
       { name: 'Category', items: [] },
       { name: 'Category', items: [] },
     ]);
-    const activeItem = ref(0);
-    const setActiveItem = (id) => {
-      activeItem.value = [...items.value].find((item) => item._id === id);
+    return {
+      getActiveItemId,
+      getActiveItem,
+      categories,
+      items,
+      starters,
     };
-    return { categories, items, starters, activeItem, setActiveItem };
   },
   mounted() {
     axios

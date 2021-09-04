@@ -2,12 +2,7 @@
   <div v-if="category.items.length" class="category">
     <h2>{{ category.name }}</h2>
     <div class="items">
-      <Item
-        v-for="(item, index) in category.items"
-        :key="index"
-        :item="item"
-        @setActiveItem="setActive"
-      />
+      <Item v-for="(item, index) in category.items" :key="index" :item="item" />
     </div>
   </div>
 </template>
@@ -25,16 +20,6 @@ export default {
         return { name: 'Category', items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11] };
       },
     },
-    setActiveItem: {
-      type: Function,
-    },
-  },
-  setup(props, { emit }) {
-    const setActive = (item) => {
-      emit('setActiveItem', item);
-    };
-
-    return { setActive };
   },
 };
 </script>

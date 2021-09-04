@@ -1,5 +1,5 @@
 <template>
-  <div @mouseover="setActive" class="item">
+  <div @mouseover="setActiveItem(item._id)" class="item">
     <img :src="item.image" :alt="item.name" />
     <div class="name">
       <p>{{ item.name }}</p>
@@ -8,22 +8,18 @@
 </template>
 
 <script>
+import useActiveItem from '../../composables/useActiveItem';
 export default {
   props: {
     item: {
       type: Object,
       default: () => {},
     },
-    setActiveItem: {
-      type: Function,
-    },
   },
-  setup(props, { emit }) {
-    const setActive = () => {
-      emit('setActiveItem', props.item._id);
-    };
+  setup() {
+    const { setActiveItem, getActiveItemId } = useActiveItem();
 
-    return { setActive };
+    return { setActiveItem, getActiveItemId };
   },
 };
 </script>
