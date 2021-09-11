@@ -1,5 +1,5 @@
 <template>
-  <div v-if="category.items.length" class="category">
+  <div v-if="category && category.items.length" class="category">
     <h2>{{ category.name }}</h2>
     <div class="items">
       <Item v-for="(item, index) in category.items" :key="index" :item="item" />
@@ -17,7 +17,7 @@ export default {
     category: {
       type: Object,
       default: () => {
-        return { name: 'Category', items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11] };
+        return {};
       },
     },
   },
@@ -27,11 +27,12 @@ export default {
 <style lang="scss" scoped>
 .category {
   text-align: center;
-
+  margin-bottom: 50px;
   > h2 {
-    margin: 100px 0 32px;
+    margin: 80px 0 32px;
     position: relative;
-    font-size: 2rem;
+    font-size: clamp(1.2rem, calc(0.9183rem + 0.9014vw), 2rem);
+    user-select: none;
     &::after {
       content: '';
       position: absolute;
@@ -45,9 +46,12 @@ export default {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -10px;
-    .item {
-      margin: 10px;
-      border-radius: 8px;
+  }
+}
+@media (max-width: 1200px) {
+  .category {
+    > h2 {
+      margin: 50px 0 32px;
     }
   }
 }

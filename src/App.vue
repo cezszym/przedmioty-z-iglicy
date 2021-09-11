@@ -1,5 +1,5 @@
 <template>
-  <div class="appWrapper">
+  <div id="appWrapper">
     <div class="leftSide basePadding">
       <h1>Przedmioty z Iglicy</h1>
       <p>Lista przedmiotów z gry Slay the Spire</p>
@@ -10,82 +10,79 @@
       />
     </div>
     <div class="rightSide basePadding">
-      <Details :item="getActiveItem" />
+      <Details v-if="getActiveItem" :item="getActiveItem" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
 import './assets/base.scss';
-import axios from 'axios';
 import useActiveItem from './composables/useActiveItem';
+import useCategories from './composables/useCategories';
+import useItems from './composables/useItems';
 import Category from './components/Category.vue';
 import Details from './components/Details.vue';
+import { onMounted } from '@vue/runtime-core';
 export default {
   name: 'App',
   components: { Category, Details },
 
   setup() {
-    const items = ref([]);
-    const { getActiveItemId, getActiveItem } = useActiveItem(items);
-    const starters = computed(() =>
-      [...items.value].filter((item) => item.rarity === 'początkowy')
-    );
-    const categories = computed(() => [
-      {
-        name: 'Początkowe',
-        items: [...items.value].filter((item) => item.rarity === 'początkowy'),
-      },
-      { name: 'Category', items: [] },
-      { name: 'Category', items: [] },
-    ]);
+    const { items, fetchItems } = useItems();
+    const { getActiveItem } = useActiveItem(items);
+    const { categories } = useCategories(items);
+    onMounted(fetchItems());
     return {
-      getActiveItemId,
       getActiveItem,
       categories,
       items,
-      starters,
     };
-  },
-  mounted() {
-    axios
-      .get('https://nest-spire.vercel.app/items')
-      .then((res) => (this.items = res.data))
-      .catch(() => {});
   },
 };
 </script>
 
 <style lang="scss">
-.appWrapper {
+#appWrapper {
   display: flex;
   position: relative;
 }
 .leftSide {
-  width: 66.66%;
+  width: 70%;
   min-height: 100vh;
   background: $black;
   > h1 {
     margin-top: 50px;
-    font-size: $huge;
+    font-size: clamp(1.75rem, calc(1.0458rem + 2.2535vw), 3.75rem);
     color: $yellow;
     -webkit-text-stroke: 2px $gray;
     text-align: center;
+    user-select: none;
+    @media (max-width: 500px) {
+      -webkit-text-stroke: unset;
+    }
   }
   > p {
-    font-size: 1.75rem;
+    font-size: clamp(1.2rem, calc(0.9183rem + 0.9014vw), 2rem);
     text-align: center;
     margin-top: 20px;
     color: $gray;
+    user-select: none;
   }
 }
 .rightSide {
   position: fixed;
   top: 0;
   right: 0;
-  width: 33.33%;
+  width: 30%;
   height: 100%;
   background: $gray;
+}
+@media (max-width: 1200px) {
+  .leftSide {
+    width: 100%;
+  }
+  .rightSide {
+    display: none;
+  }
 }
 </style>
