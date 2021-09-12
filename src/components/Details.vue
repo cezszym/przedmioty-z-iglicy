@@ -93,10 +93,10 @@ export default {
 }
 @keyframes unroll {
   0% {
-    top: 65%;
+    top: 10%;
   }
   100% {
-    top: 50%;
+    top: 0%;
   }
 }
 .modalWrapper {
@@ -111,8 +111,8 @@ export default {
   height: 100vh;
   .triangle {
     z-index: 3;
-    user-select: none;
     cursor: pointer;
+
     &.right {
       transform: rotate(180deg);
     }
@@ -154,11 +154,11 @@ export default {
   .modalWrapper {
     .modal {
       width: 80%;
-      transform: translateY(-80px);
+      transform: translateY(-100px);
     }
     .triangle {
       position: absolute;
-      bottom: 15%;
+      bottom: 20%;
       width: 60px;
       &.left {
         left: 30vw;
