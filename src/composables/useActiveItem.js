@@ -10,21 +10,35 @@ export default function useActiveItem(items) {
     return null;
   });
 
+  const getIdOfNextItem = computed(() => {
+    if (items.value.length && state.value.activeId) {
+      const currentIndex = [...items.value]
+        .map((item) => item._id)
+        .indexOf(state.value.activeId);
+      return items.value[currentIndex + 1]
+        ? items.value[currentIndex + 1]._id
+        : null;
+    }
+    return null;
+  });
+
+  const getIdOfPrevItem = computed(() => {
+    if (items.value.length && state.value.activeId) {
+      const currentIndex = [...items.value]
+        .map((item) => item._id)
+        .indexOf(state.value.activeId);
+      return items.value[currentIndex - 1]
+        ? items.value[currentIndex - 1]._id
+        : null;
+    }
+    return null;
+  });
+
   const setActiveItem = (id) => {
-    state.value.activeId = id;
+    if (id) {
+      state.value.activeId = id;
+    }
   };
 
-  // const activeItemIndex = computed(() => {
-  //   if (items.value.length) {
-  //     return [...items.value].find((item) => item._id === state.value.activeId);
-  //   }
-  //   return null;
-  // });
-
-  const setNextItem = () => {
-    console.log(state.value.activeId);
-    // state.value.activeId = items[activeItemIndex.value + 1]._id;
-  };
-
-  return { getActiveItem, setActiveItem, setNextItem };
+  return { getActiveItem, setActiveItem, getIdOfNextItem, getIdOfPrevItem };
 }

@@ -21,9 +21,9 @@
       </span>
     </p>
     <p class="label">Klasa</p>
-    <p>{{ item.class || 'Wszystkie postacie' }}</p>
+    <p class="class">{{ item.class || 'Wszystkie postacie' }}</p>
     <p class="label">Rzadkość</p>
-    <p>{{ item.rarity }}</p>
+    <p class="rarity">{{ item.rarity }}</p>
     <p class="label">Opis</p>
     <p class="italic">„{{ item.text }}”</p>
   </div>
@@ -125,6 +125,21 @@ export default {
   > :not(.description) {
     display: inline;
     margin: 10px;
+  }
+  .rarity,
+  .class {
+    position: absolute;
+    top: 15px;
+    font-size: $small;
+  }
+  .rarity {
+    left: 15px;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .class {
+    right: 15px;
   }
   .italic {
     display: block;

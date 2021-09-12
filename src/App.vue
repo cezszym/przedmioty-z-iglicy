@@ -10,7 +10,12 @@
       />
     </div>
     <div class="rightSide basePadding">
-      <Details v-if="getActiveItem" :item="getActiveItem" />
+      <Details
+        v-if="getActiveItem"
+        :item="getActiveItem"
+        :next-id="getIdOfNextItem"
+        :prev-id="getIdOfPrevItem"
+      />
     </div>
   </div>
 </template>
@@ -29,11 +34,15 @@ export default {
 
   setup() {
     const { items, fetchItems } = useItems();
-    const { getActiveItem } = useActiveItem(items);
+    const { getActiveItem, getIdOfNextItem, getIdOfPrevItem } = useActiveItem(
+      items
+    );
     const { categories } = useCategories(items);
     onMounted(fetchItems());
     return {
       getActiveItem,
+      getIdOfNextItem,
+      getIdOfPrevItem,
       categories,
       items,
     };
