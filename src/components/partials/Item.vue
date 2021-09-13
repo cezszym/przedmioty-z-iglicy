@@ -1,6 +1,11 @@
 <template>
   <div @mouseover="setActiveItem(item._id)" @click="setModalOpen" class="item">
-    <img :src="item.image" :alt="item.name" />
+    <picture v-if="item.image">
+      <source :srcset="image.big_webp" media="(min-width: 1200px)" />
+      <source :srcset="image.medium" media="(min-width: 700px)" />
+      <source :srcset="image.big_webp" />
+      <img :src="item.image" />
+    </picture>
     <div class="name">
       <p>{{ item.name }}</p>
     </div>
@@ -8,6 +13,7 @@
 </template>
 
 <script>
+import { computed } from '@vue/reactivity';
 import useActiveItem from '../../composables/useActiveItem';
 import useModal from '../../composables/useModal';
 export default {
@@ -17,10 +23,27 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  setup(props) {
+    const image = computed(() => {
+      const transform = (img) => img.replace('.png', '.webp');
+      if (props.item && props.item.image) {
+        const big = props.item.image.split('/');
+        big[6] = 'w_80,h_80,c_fill';
+        const medium = props.item.image.split('/');
+        medium[6] = 'w_60,h_60,c_fill';
+        const small = props.item.image.split('/');
+        small[6] = 'w_45,h_45,c_fill';
+        return {
+          big_webp: transform(big.join('/')),
+          medium_webp: transform(medium.join('/')),
+          small_webp: transform(small.join('/')),
+        };
+      }
+      return null;
+    });
     const { setActiveItem } = useActiveItem();
     const { setModalOpen } = useModal();
-    return { setActiveItem, setModalOpen };
+    return { setActiveItem, setModalOpen, image };
   },
 };
 </script>
@@ -45,7 +68,7 @@ export default {
       -webkit-font-smoothing: subpixel-antialiased;
     }
   }
-  > img {
+  img {
     width: 80px;
     height: 80px;
     user-select: none;
@@ -64,7 +87,7 @@ export default {
     width: calc(20% - 16px);
     height: 120px;
     margin: 8px;
-    > img {
+    img {
       width: 60px;
       height: 60px;
     }
@@ -81,7 +104,7 @@ export default {
     margin: 6px;
     height: fit-content;
     padding: 10px 0;
-    > img {
+    img {
       width: 45px;
       height: 45px;
     }
