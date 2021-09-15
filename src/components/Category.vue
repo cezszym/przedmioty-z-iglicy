@@ -1,10 +1,16 @@
 <template>
-  <div v-if="category && category.items.length" class="category">
-    <h2>{{ category.name }}</h2>
-    <div class="items">
-      <Item v-for="(item, index) in category.items" :key="index" :item="item" />
+  <transition name="unroll">
+    <div v-if="category && category.items.length" class="category">
+      <h2>{{ category.name }}</h2>
+      <div class="items">
+        <Item
+          v-for="(item, index) in category.items"
+          :key="index"
+          :item="item"
+        />
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -25,6 +31,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.unroll-enter-active,
+.unroll-leave-active {
+  transition: all 0.5s ease;
+}
+
+.unroll-enter-from,
+.unroll-leave-to {
+  opacity: 0.5;
+  transform: translateY(50px);
+}
 .category {
   text-align: center;
   margin-bottom: 50px;

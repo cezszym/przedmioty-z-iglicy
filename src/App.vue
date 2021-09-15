@@ -3,6 +3,7 @@
     <div class="leftSide basePadding">
       <h1>Przedmioty z Iglicy</h1>
       <p>Lista przedmiotów z gry Slay the Spire</p>
+      <Loading v-if="fetchingStatus" />
       <Category
         v-for="(category, index) in categories"
         :key="index"
@@ -27,13 +28,14 @@ import useCategories from './composables/useCategories';
 import useItems from './composables/useItems';
 import Category from './components/Category.vue';
 import Details from './components/Details.vue';
+import Loading from './components/partials/Loading.vue';
 import { onMounted } from '@vue/runtime-core';
 export default {
   name: 'App',
-  components: { Category, Details },
+  components: { Category, Details, Loading },
 
   setup() {
-    const { items, fetchItems } = useItems();
+    const { items, fetchItems, fetchingStatus } = useItems();
     const { getActiveItem, getIdOfNextItem, getIdOfPrevItem } = useActiveItem(
       items
     );
@@ -45,6 +47,7 @@ export default {
       getIdOfPrevItem,
       categories,
       items,
+      fetchingStatus,
     };
   },
 };
