@@ -115,12 +115,16 @@ export default {
 }
 .modal > .details {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .name {
     color: $yellow;
-    font-size: $regular;
+    font-size: $medium;
   }
   .description {
     margin: 20px 0;
+    font-size: $regular;
   }
   > :not(.description) {
     display: inline;
@@ -130,7 +134,6 @@ export default {
   .class {
     position: absolute;
     top: 15px;
-    font-size: $small;
   }
   .rarity {
     left: 15px;
@@ -142,10 +145,41 @@ export default {
     right: 15px;
   }
   .italic {
+    position: relative;
     display: block;
+    font-style: italic;
+    width: 60%;
+    padding-top: 20px;
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      left: 0;
+      top: 0;
+      border-bottom: 1px solid $white;
+    }
   }
   .label {
     display: none;
+  }
+}
+@media (max-width: 700px) {
+  .modal > .details {
+    .name {
+      color: $yellow;
+      font-size: $regular;
+    }
+    .description {
+      margin: 10px 0;
+      font-size: $default;
+    }
+    .rarity,
+    .class {
+      font-size: $small;
+    }
+    .italic {
+      width: 90%;
+    }
   }
 }
 </style>

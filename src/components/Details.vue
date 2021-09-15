@@ -155,16 +155,20 @@ export default {
     .modal {
       width: 80%;
       transform: translateY(-100px);
+      > img {
+        width: 90px;
+        height: 90px;
+      }
     }
     .triangle {
       position: absolute;
-      bottom: 20%;
+      bottom: 15%;
       width: 60px;
       &.left {
-        left: 30vw;
+        left: 15vw;
       }
       &.right {
-        right: 30vw;
+        right: 15vw;
       }
     }
   }
