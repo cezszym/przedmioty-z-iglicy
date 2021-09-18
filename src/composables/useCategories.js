@@ -12,6 +12,9 @@ export default function useCategories(items) {
     },
     { name: 'Pospolite', items: findByCategory('pospolity') },
     { name: 'Niepospolite', items: findByCategory('niepospolity') },
+    { name: 'Rzadkie', items: findByCategory('rzadki') },
+    { name: 'Legendarne', items: findByCategory('legendarny') },
+    { name: 'Unikalne', items: findByCategory('unikalny') },
   ]);
 
   return { categories };

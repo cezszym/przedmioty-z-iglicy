@@ -3,7 +3,7 @@
     <picture v-if="item.image">
       <source :srcset="image.big_webp" media="(min-width: 1200px)" />
       <source :srcset="image.medium" media="(min-width: 700px)" />
-      <source :srcset="image.big_webp" />
+      <source :srcset="image.small.webp" />
       <img :src="item.image" />
     </picture>
     <div class="name">
