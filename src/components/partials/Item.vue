@@ -2,8 +2,8 @@
   <div @mouseover="setActiveItem(item._id)" @click="setModalOpen" class="item">
     <picture v-if="item.image">
       <source :srcset="image.big_webp" media="(min-width: 1200px)" />
-      <source :srcset="image.medium" media="(min-width: 700px)" />
-      <source :srcset="image.small.webp" />
+      <source :srcset="image.medium_webp" media="(min-width: 700px)" />
+      <source :srcset="image.small_webp" />
       <img :src="item.image" />
     </picture>
     <div class="name">
