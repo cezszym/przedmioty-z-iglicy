@@ -12,7 +12,7 @@
         <div @click="setModalOpen(false)" class="modalBackground" />
         <div class="modal basePadding">
           <img :src="item.image" :alt="item.name" />
-          <DetailsContent :item="item" />
+          <DetailsContent :item="item" :keywords="featuredKeywords" />
         </div>
         <img
           @click="setActiveItem(nextId)"
@@ -27,41 +27,26 @@
 
 <script>
 import DetailsContent from './partials/DetailsContent.vue';
-import { computed, ref } from 'vue';
 import useModal from '../composables/useModal';
 import useActiveItem from '../composables/useActiveItem';
+import { computed } from 'vue';
 export default {
   components: {
     DetailsContent,
   },
-  setup() {
+  setup(props) {
     const { getModalOpen, setModalOpen } = useModal();
     const { setActiveItem } = useActiveItem();
-    const abilities = ref([
-      {
-        name: ['Cud'],
-        description: 'Karta Cudu po użyciu daje 1 punkt energii.',
-      },
-    ]);
-
-    const abilityBox = ref(null);
-
-    const abilitiesNames = computed(() =>
-      abilities.value.map((a) => a.name).flat()
+    const featuredKeywords = computed(() =>
+      [...props.keywords].filter((keyword) =>
+        keyword.names.some((name) => props.item.abilities.includes(name))
+      )
     );
-
-    const displayDescription = (name) => {
-      const abitliy = abilities.value.find((a) => a.name.includes(name));
-      abilityBox.value = abitliy.description;
-    };
-
     return {
       setActiveItem,
       getModalOpen,
       setModalOpen,
-      abilitiesNames,
-      displayDescription,
-      abilityBox,
+      featuredKeywords,
     };
   },
   props: {
@@ -76,6 +61,10 @@ export default {
     prevId: {
       type: String,
       default: null,
+    },
+    keywords: {
+      type: Array,
+      default: () => [],
     },
   },
 };

@@ -4,7 +4,7 @@
       <source :srcset="image.big_webp" media="(min-width: 1200px)" />
       <source :srcset="image.medium_webp" media="(min-width: 700px)" />
       <source :srcset="image.small_webp" />
-      <img :src="item.image" />
+      <img :src="item.image" :alt="item.name" />
     </picture>
     <div class="name">
       <p>{{ item.name }}</p>

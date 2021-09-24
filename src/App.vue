@@ -1,5 +1,11 @@
 <template>
-  <div id="appWrapper">
+  <div
+    id="appWrapper"
+    tabindex="0"
+    @keydown.esc="setModalOpen(false)"
+    @keydown.left="setActiveItem(getIdOfPrevItem)"
+    @keydown.right="setActiveItem(getIdOfNextItem)"
+  >
     <div class="leftSide basePadding">
       <h1>Przedmioty z Iglicy</h1>
       <p>Lista przedmiotów z gry Slay the Spire</p>
@@ -16,6 +22,7 @@
         :item="getActiveItem"
         :next-id="getIdOfNextItem"
         :prev-id="getIdOfPrevItem"
+        :keywords="keywords"
       />
     </div>
   </div>
@@ -26,6 +33,8 @@ import './assets/base.scss';
 import useActiveItem from './composables/useActiveItem';
 import useCategories from './composables/useCategories';
 import useItems from './composables/useItems';
+import useKeywords from './composables/useKeywords';
+import useModal from './composables/useModal';
 import Category from './components/Category.vue';
 import Details from './components/Details.vue';
 import Loading from './components/partials/Loading.vue';
@@ -36,17 +45,25 @@ export default {
 
   setup() {
     const { items, fetchItems, fetchingStatus } = useItems();
-    const { getActiveItem, getIdOfNextItem, getIdOfPrevItem } = useActiveItem(
-      items
-    );
+    const {
+      getActiveItem,
+      getIdOfNextItem,
+      getIdOfPrevItem,
+      setActiveItem,
+    } = useActiveItem(items);
+    const { setModalOpen } = useModal();
     const { categories } = useCategories(items);
-    onMounted(fetchItems());
+    const { keywords, fetchKeywords } = useKeywords();
+    onMounted(fetchItems(), fetchKeywords());
     return {
       getActiveItem,
       getIdOfNextItem,
       getIdOfPrevItem,
+      setActiveItem,
+      setModalOpen,
       categories,
       items,
+      keywords,
       fetchingStatus,
     };
   },
@@ -77,7 +94,7 @@ export default {
     font-size: clamp(1.2rem, calc(0.9183rem + 0.9014vw), 2rem);
     text-align: center;
     margin-top: 20px;
-    color: $gray;
+    color: $light-gray;
     user-select: none;
   }
 }

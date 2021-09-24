@@ -15,6 +15,7 @@ export default function useCategories(items) {
     { name: 'Rzadkie', items: findByCategory('rzadki') },
     { name: 'Legendarne', items: findByCategory('legendarny') },
     { name: 'Unikalne', items: findByCategory('unikalny') },
+    { name: 'Zakupione', items: findByCategory('zakupiony') },
   ]);
 
   return { categories };

@@ -6,18 +6,16 @@
       <span
         v-for="(word, index) in item.description.split(' ')"
         :key="index"
-        :class="{ yellow: abilitiesNames.includes(word) }"
-        @mouseover="abilitiesNames.includes(word) && displayDescription(word)"
-        @mouseleave="
-          {
-            abilityBox = null;
-          }
-        "
+        :class="{
+          keyword: item.abilities.includes(
+            word
+              .toLowerCase()
+              .replace('.', '')
+              .replace(',', '')
+          ),
+        }"
       >
         {{ word }}&nbsp;
-        <span v-if="abilitiesNames.includes(word) && abilityBox">
-          {{ abilityBox }}
-        </span>
       </span>
     </p>
     <p class="label">Klasa</p>
@@ -25,42 +23,26 @@
     <p class="label">Rzadkość</p>
     <p class="rarity">{{ item.rarity }}</p>
     <p class="label">Opis</p>
+    <div v-if="keywords.length" class="keywords">
+      <p v-for="(keyword, index) in keywords" :key="index">
+        <span class="keywordName">{{ keyword.names[0] }} : </span>
+        {{ keyword.description }}
+      </p>
+    </div>
     <p class="italic">„{{ item.text }}”</p>
   </div>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
 export default {
-  setup() {
-    const abilities = ref([
-      {
-        name: ['Cud'],
-        description: 'Karta Cudu po użyciu daje 1 punkt energii.',
-      },
-    ]);
-
-    const abilityBox = ref(null);
-
-    const abilitiesNames = computed(() =>
-      abilities.value.map((a) => a.name).flat()
-    );
-
-    const displayDescription = (name) => {
-      const abitliy = abilities.value.find((a) => a.name.includes(name));
-      abilityBox.value = abitliy.description;
-    };
-
-    return {
-      abilitiesNames,
-      displayDescription,
-      abilityBox,
-    };
-  },
   props: {
     item: {
       type: Object,
       default: null,
+    },
+    keywords: {
+      type: Array,
+      default: () => [],
     },
   },
 };
@@ -73,6 +55,7 @@ export default {
     font-size: clamp(1.75rem, 1.3333rem + 0.5556vw, 2rem);
     text-align: center;
     margin: 0 5px 50px;
+    font-weight: 700;
   }
   .label {
     font-size: $regular;
@@ -83,32 +66,16 @@ export default {
       padding: 20px;
       border: 1px solid #c4c4c4;
       border-radius: 8px;
-      line-height: 1.3;
+      line-height: 1.4;
       &.italic {
         font-style: italic;
       }
       &::first-letter {
         text-transform: uppercase;
       }
-      .yellow {
+      .keyword {
         position: relative;
         color: $yellow;
-        cursor: help;
-        > span {
-          position: absolute;
-          z-index: 2;
-          top: 0;
-          left: 0;
-          transform: translate(-102%, -102%);
-          padding: 15px;
-          font-size: $small;
-          line-height: 1.2;
-          width: 200px;
-          background: $dark;
-          border-radius: 8px 8px 0 8px;
-          box-shadow: $box-shadow;
-          opacity: 0.9;
-        }
       }
     }
   }
@@ -121,14 +88,15 @@ export default {
   .name {
     color: $yellow;
     font-size: $medium;
+    font-weight: 700;
   }
   .description {
     margin: 20px 0;
     font-size: $regular;
+    width: 80%;
   }
   > :not(.description) {
     display: inline;
-    margin: 10px;
   }
   .rarity,
   .class {
@@ -139,6 +107,32 @@ export default {
     left: 15px;
     &::first-letter {
       text-transform: uppercase;
+    }
+  }
+  .keyword {
+    font-weight: 700;
+  }
+  .keywords {
+    padding: 10px 0;
+    position: relative;
+    width: 80%;
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      border-bottom: 1px solid $white;
+    }
+    p {
+      margin: 10px 0;
+      line-height: 1.7;
+    }
+    .keywordName {
+      color: $yellow;
+      font-weight: 700;
+      text-transform: capitalize;
     }
   }
   .class {
