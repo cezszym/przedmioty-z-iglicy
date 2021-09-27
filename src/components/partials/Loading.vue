@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 100px 0;
+  margin: 120px 0;
 }
 .loading {
   position: relative;
@@ -63,8 +63,10 @@
   text-align: center;
 }
 @media (max-width: 700px) {
+  .loadingWrapper {
+    margin: 120px 0;
+  }
   .loading {
-    margin: 50px 0;
     width: 250px;
     height: 250px;
   }

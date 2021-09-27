@@ -57,7 +57,6 @@ export default {
   transition: 0.4s;
   margin: 10px;
   border-radius: 8px;
-
   @media (min-width: 1200px) {
     &:hover {
       box-shadow: $box-shadow;

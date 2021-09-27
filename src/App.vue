@@ -26,6 +26,7 @@
       />
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
@@ -38,10 +39,11 @@ import useModal from './composables/useModal';
 import Category from './components/Category.vue';
 import Details from './components/Details.vue';
 import Loading from './components/partials/Loading.vue';
+import Footer from './components/Footer.vue';
 import { onMounted } from '@vue/runtime-core';
 export default {
   name: 'App',
-  components: { Category, Details, Loading },
+  components: { Category, Details, Loading, Footer },
 
   setup() {
     const { items, fetchItems, fetchingStatus } = useItems();

@@ -142,8 +142,8 @@ export default {
 @media (max-width: 800px) {
   .modalWrapper {
     .modal {
-      width: 80%;
-      transform: translateY(-100px);
+      width: 90%;
+      transform: translateY(-50px);
       > img {
         width: 90px;
         height: 90px;
@@ -151,13 +151,14 @@ export default {
     }
     .triangle {
       position: absolute;
-      bottom: 15%;
-      width: 60px;
+      bottom: 50%;
+      width: 30px;
+      z-index: 4;
       &.left {
-        left: 15vw;
+        left: 10px;
       }
       &.right {
-        right: 15vw;
+        right: 10px;
       }
     }
   }

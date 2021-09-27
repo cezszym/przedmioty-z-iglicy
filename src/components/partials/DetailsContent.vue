@@ -158,21 +158,26 @@ export default {
   }
 }
 @media (max-width: 700px) {
-  .modal > .details {
-    .name {
-      color: $yellow;
-      font-size: $regular;
-    }
-    .description {
-      margin: 10px 0;
-      font-size: $default;
-    }
-    .rarity,
-    .class {
-      font-size: $small;
-    }
-    .italic {
-      width: 90%;
+  .modal {
+    > .details {
+      .name {
+        color: $yellow;
+        font-size: $regular;
+      }
+      .description {
+        margin: 10px 0;
+        font-size: $default;
+      }
+      .rarity,
+      .class {
+        font-size: $small;
+      }
+      .italic {
+        width: 90%;
+      }
+      .keywords {
+        width: 90%;
+      }
     }
   }
 }

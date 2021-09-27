@@ -2,6 +2,7 @@
   <transition name="unroll">
     <div v-if="category && category.items.length" class="category">
       <h2>{{ category.name }}</h2>
+      <h3>{{ category.description }}</h3>
       <div class="items">
         <Item
           v-for="(item, index) in category.items"
@@ -45,9 +46,16 @@ export default {
   text-align: center;
   margin-bottom: 50px;
   > h2 {
-    margin: 80px 0 32px;
+    margin-top: 80px;
+    margin-bottom: 10px;
     position: relative;
+    user-select: none;
     font-size: clamp(1.2rem, calc(0.9183rem + 0.9014vw), 2rem);
+  }
+  > h3 {
+    margin-bottom: 32px;
+    color: $light-gray;
+    position: relative;
     user-select: none;
     &::after {
       content: '';
@@ -67,7 +75,10 @@ export default {
 @media (max-width: 1200px) {
   .category {
     > h2 {
-      margin: 50px 0 32px;
+      margin: 60px 0 10px;
+    }
+    > h3 {
+      font-size: $small;
     }
   }
 }
